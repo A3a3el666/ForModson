@@ -90,6 +90,12 @@ const DATA = [
                 correct: false,
                 
             },
+            {
+                id:'11',
+                value: 'Dunai',
+                correct: false,
+                
+            },
         ]
     },
 ];
@@ -143,11 +149,11 @@ quiz.addEventListener('click',(event) =>{
         if(event.target.id === 'correctAnswer'){
             count++;
             event.target.id = 'correct';
-            event.target.classList.add('disabled');
+            quastions.classList.add('disabled');
             controlButtonNext.disabled = false;
         } else if(event.target.id === 'wrongAnswer'){
             event.target.id = 'wrong';
-            event.target.classList.add('disabled');
+            quastions.classList.add('disabled');
             controlButtonNext.disabled = false;
         }
     }
@@ -157,8 +163,10 @@ quiz.addEventListener('click',(event) =>{
         
         if(DATA.length === nextQuiation){
             renderResults(count);
+            quastions.classList.remove('disabled');
         } else {
             renderQuastions(nextQuiation);
+            quastions.classList.remove('disabled');
         }
         
         controlButtonNext.disabled = true;
