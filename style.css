@@ -18,7 +18,7 @@ body {
     box-shadow: 5px 5px 5px black;
 }
 
-.quizNumOfQuastions{
+.quizNumOfQuestions{
     text-align: center;
     font-size: 20px;
     margin-top: 20px;
@@ -26,14 +26,18 @@ body {
 
 
 
-.quizQuastions-item-quastion{
+.quizQuestions-item-question{
     text-align: center;
     font-size: 28px;
     font-style: italic;
     margin-top: 10px;
 }
 
-.quizQuastions-item-answers{
+.quizQuestion-item-numOfAnswers{
+    text-align: center;
+}
+
+.quizQuestions-item-answers{
     margin: 0;
     padding: 0;
     list-style: none;
@@ -70,7 +74,7 @@ body {
 }
 
 .answerClick{
-    margin-top: 50px;
+    margin-top: 40px;
     background-color: aqua;
     height: 50px;
     width: 100px;
