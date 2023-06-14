@@ -95,7 +95,7 @@ const DATA = [
                 
             },
             {
-                id:'11',
+                id:'12',
                 value: 'Dunai',
                 correct: false,
                 
@@ -108,23 +108,23 @@ const DATA = [
 
 let count = 0;
 let nOfTrueAnswers = 0;
-let numOfChoosenAnswers = 0;
+let numOfSelectedAnswers = 0;
 
 const quiz = document.getElementById('quiz');
 const numOfQuestion = document.getElementById('numOfQuestion');
 const questions = document.getElementById('questions');
 const results = document.getElementById('results');
 const controlButtonNext = document.getElementById('controlButton-next');
-const controlButtonRestart = document.getElementById('contolButton-restart');
+const controlButtonRestart = document.getElementById('controlButton-restart');
 
 const renderQuestions = (index) => {
-    renderuNumOfQuestion(index+1);
+    renderNumOfQuestion(index+1);
 
     questions.dataset.currentStep = index;
 
     const giveId = (answerIndex) => {
-        let corectless = answerIndex;
-        if(corectless){
+        let correctness = answerIndex;
+        if(correctness){
             return 'correctAnswer';
         } else {
             return 'wrongAnswer';
@@ -132,7 +132,7 @@ const renderQuestions = (index) => {
     };
 
     const renderAnswers = () => DATA[index].answers
-    .map((answer) =>`<button class='answerClick' id= ${giveId(answer.correct)} name="${index} value=${answer.id}">${answer.value}</button>`)
+    .map(({id,correct,value}) =>`<button class='answerClick' id= ${giveId(correct)} name="${index} value=${id}">${value}</button>`)
     .join('');
 
     questions.innerHTML = `
@@ -146,7 +146,7 @@ const renderQuestions = (index) => {
 };
 
 
-const renderuNumOfQuestion = (currentQuestion) => {
+const renderNumOfQuestion = (currentQuestion) => {
     numOfQuestion.innerHTML = `Вопрос ${currentQuestion}/${DATA.length}`   
 };
 
@@ -155,41 +155,41 @@ quiz.addEventListener('click',(event) =>{
 
     if(event.target.classList.contains('answerClick')){
         
-        numOfChoosenAnswers++;
+        numOfSelectedAnswers++;
 
         if(event.target.id === 'correctAnswer'){
             event.target.id = 'correct';
-            if(nOfTrueAnswers === numOfChoosenAnswers){
+            if(nOfTrueAnswers === numOfSelectedAnswers){
                 count++;
                 questions.classList.add('disabled');
                 controlButtonNext.disabled = false;
-                numOfChoosenAnswers = 0;
+                numOfSelectedAnswers = 0;
             }
         } else if(event.target.id === 'wrongAnswer'){
             event.target.id = 'wrong';
-            if(nOfTrueAnswers === numOfChoosenAnswers){
+            if(nOfTrueAnswers === numOfSelectedAnswers){
                 questions.classList.add('disabled');
                 controlButtonNext.disabled = false;
-                numOfChoosenAnswers = 0;
+                numOfSelectedAnswers = 0;
             }
         }
     }
 
     if(event.target.classList.contains('controlButton-next')){
-        let nextQuiation = Number(questions.dataset.currentStep)+1;
+        let nextQuestion = Number(questions.dataset.currentStep)+1;
         
-        if(DATA.length === nextQuiation){
+        if(DATA.length === nextQuestion){
             renderResults(count);
             questions.classList.remove('disabled');
         } else {
-            renderQuestions(nextQuiation);
+            renderQuestions(nextQuestion);
             questions.classList.remove('disabled');
         }
         
         controlButtonNext.disabled = true;
     }
 
-    if(event.target.classList.contains('contolButton-restart')){
+    if(event.target.classList.contains('controlButton-restart')){
         numOfQuestion.classList.remove('nonVisible');
         questions.classList.remove('nonVisible');
         controlButtonNext.classList.remove('nonVisible');

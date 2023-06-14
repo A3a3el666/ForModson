@@ -1,21 +1,19 @@
-
 body {
     background-color: rgb(88, 158, 204);
-    position: relative
 }
 
 .quiz {
-
     background-color: rgb(251, 242, 229);
     position: absolute;
     left: 50%;
     margin-right: -50%;
-    margin-top: 25%;
+    margin-top: 30%;
     transform: translate(-50%, -50%);
     width: 700px;
-    height: 300px;
+    height: auto;
     border-radius: 10px;
     box-shadow: 5px 5px 5px black;
+    padding-bottom: 20px;
 }
 
 .quizNumOfQuestions{
@@ -54,26 +52,40 @@ body {
     margin-top: 50px;
 }
 
+.quizControls{
+    display: flex;
+    justify-content:space-around;
+}
+
 .controlButton-next{
-    margin: 50px 43%;
+    cursor: pointer;
+    position: relative;
     height: 50px;
     width: 100px;
+    margin-top: 50px;
+    font-weight: bold;
     border-radius: 10px;
     box-shadow: 3px 3px 3px black;
     background-color: rgb(172, 255, 228);
+    overflow: hidden;
+    
 }
 
-.contolButton-restart{
+.controlButton-restart{
+    cursor: pointer;
     display: none;
+    position: relative;
     margin: 50px 43%;
     height: 50px;
     width: 100px;
+    font-weight: bold;
     border-radius: 10px;
     box-shadow: 3px 3px 3px black;
     background-color: rgb(172, 255, 228);
 }
 
 .answerClick{
+    cursor: pointer;
     margin-top: 40px;
     background-color: aqua;
     height: 50px;
@@ -101,4 +113,66 @@ body {
 
 .nonVisible{
     display: none;
+}
+
+@media screen and (max-width:1000px) {
+    .quiz {
+        width: 70%;
+        margin-top: 32%;
+    }
+
+    .answerClick{
+        margin-top: 20px;
+    }
+}
+
+@media screen and (max-width:800px) {
+    .quiz {
+        width: 60%;
+        margin-top: 40%;
+    }
+    
+    .controlButton-next{
+        width: 80px;
+    }
+
+    .answerClick{
+        margin-top: 30px;
+    }
+
+    @media screen and (max-width:550px) {
+        .quiz {
+            width: 60%;
+            margin-top: 60%;
+        }
+        
+        .controlButton-next{
+            width: 80px;
+        }
+        .quizQuestions-item-answers{
+            flex-direction: column;
+            margin-left: 33%;
+        }
+        .answerClick{
+            display: inline-block;
+            margin-top: 30px;
+        }
+
+        @media screen and (max-width:320px) {
+            .quiz {
+                width: 60%;
+                margin-top: 100%;
+            }
+            
+            .controlButton-next{
+                width: 80px;
+            }
+            .quizQuestions-item-answers{
+                flex-direction: column;
+                margin-left: 23%;
+            }
+            .answerClick{
+                display: inline-block;
+                margin-top: 30px;
+            }
 }
