@@ -5,15 +5,14 @@ body {
 .quiz {
     background-color: rgb(251, 242, 229);
     position: absolute;
+    top: 50%;
     left: 50%;
-    margin-right: -50%;
-    margin-top: 30%;
     transform: translate(-50%, -50%);
-    width: 700px;
+    width: auto;
     height: auto;
     border-radius: 10px;
     box-shadow: 5px 5px 5px black;
-    padding-bottom: 20px;
+    padding: 10px 20px 20px 20px;
 }
 
 .quizNumOfQuestions{
@@ -75,13 +74,14 @@ body {
     cursor: pointer;
     display: none;
     position: relative;
-    margin: 50px 43%;
+    margin: 0;
     height: 50px;
-    width: 100px;
+    width: 22%;
     font-weight: bold;
     border-radius: 10px;
     box-shadow: 3px 3px 3px black;
     background-color: rgb(172, 255, 228);
+    overflow: hidden;
 }
 
 .answerClick{
@@ -115,64 +115,102 @@ body {
     display: none;
 }
 
-@media screen and (max-width:1000px) {
-    .quiz {
-        width: 70%;
-        margin-top: 32%;
-    }
+.result{
+    font-size: 26px;
+}
 
+@media screen and (max-width:1000px) {
     .answerClick{
-        margin-top: 20px;
+        margin: 30px 10px 0 10px;
     }
 }
 
 @media screen and (max-width:800px) {
-    .quiz {
-        width: 60%;
-        margin-top: 40%;
+    .quizQuestions-item-question{
+        font-size: 20px;
+        margin-top: 0;
+    }
+
+    .quizNumOfQuestions{
+        font-size: 16px;
+    }
+
+    .quizQuestion-item-numOfAnswers{
+        font-size: 14px;
     }
     
     .controlButton-next{
-        width: 80px;
+        height: 40px;
+        width: 30%;
+    }
+    .controlButton-restart{
+        height: 40px;
+        margin: 0;
+        width: 30%;
     }
 
     .answerClick{
-        margin-top: 30px;
+        margin: 30px 10px 0 10px;
+        height: 40px;
+        width: 30%;
     }
 
+    .result{
+        font-size: 20px;
+    }
+}
     @media screen and (max-width:550px) {
-        .quiz {
-            width: 60%;
-            margin-top: 60%;
+        .quizQuestions-item-question{
+            font-size: 20px;
+            margin-top: 0;
+        }
+
+        .quizNumOfQuestions{
+            font-size: 16px;
+        }
+
+        .quizQuestion-item-numOfAnswers{
+            font-size: 14px;
         }
         
         .controlButton-next{
-            width: 80px;
+            width: 40%;
+            height: 30px;
+        }
+        .controlButton-restart{
+            margin: 0;
+            width: 50%;
         }
         .quizQuestions-item-answers{
             flex-direction: column;
-            margin-left: 33%;
+            display: flex;
         }
         .answerClick{
-            display: inline-block;
-            margin-top: 30px;
+            width: 40%;
+            height: 30px;
+            align-self: center;
+            margin-top: 15px;
         }
 
-        @media screen and (max-width:320px) {
-            .quiz {
-                width: 60%;
-                margin-top: 100%;
-            }
-            
+        .result{
+            font-size: 20px;
+        }
+    }
+        @media screen and (max-width:375px) {
             .controlButton-next{
                 width: 80px;
             }
             .quizQuestions-item-answers{
                 flex-direction: column;
-                margin-left: 23%;
             }
             .answerClick{
                 display: inline-block;
-                margin-top: 30px;
+                margin-top: 10px;
+                width: 60%;
+                height: 30px;
             }
-}
+            .controlButton-restart{
+                margin: 0;
+                width: 70%;
+            }
+        }

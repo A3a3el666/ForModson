@@ -122,17 +122,8 @@ const renderQuestions = (index) => {
 
     questions.dataset.currentStep = index;
 
-    const giveId = (answerIndex) => {
-        let correctness = answerIndex;
-        if(correctness){
-            return 'correctAnswer';
-        } else {
-            return 'wrongAnswer';
-        }
-    };
-
     const renderAnswers = () => DATA[index].answers
-    .map(({id,correct,value}) =>`<button class='answerClick' id= ${giveId(correct)} name="${index} value=${id}">${value}</button>`)
+    .map(({id,correct,value}) =>`<button class='answerClick' id = ${correct? "correctAnswer":"wrongAnswer"} name="${index} value=${id}">${value}</button>`)
     .join('');
 
     questions.innerHTML = `
@@ -206,7 +197,7 @@ const renderResults = (count) => {
     controlButtonNext.classList.add('nonVisible');
     controlButtonRestart.classList.add('visible');
     results.classList.add('visible');
-    results.innerHTML = `Вы решили ${count} из ${DATA.length} вопросов.`
+    results.innerHTML = `<p class="result">Вы решили ${count} из ${DATA.length} вопросов.</p>`
 };
 
 renderQuestions(0);
