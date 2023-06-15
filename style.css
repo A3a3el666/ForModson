@@ -1,9 +1,9 @@
-body {
-    background-color: rgb(88, 158, 204);
+body{
+    background-color: rgb(135, 220, 220);
 }
 
 .quiz {
-    background-color: rgb(251, 242, 229);
+    background-color: rgb(255, 237, 212);
     position: absolute;
     top: 50%;
     left: 50%;
@@ -15,11 +15,23 @@ body {
     padding: 10px 20px 20px 20px;
 }
 
+.themeSwitchButton{
+    text-align: center;
+    background-color: rgb(172, 255, 228);
+    width: auto;
+    border-radius: 5px;
+    border: 3px;
+    border-style:outset;
+    border-color: black;
+    float: left;
+}
+
 .timer{
     text-align: center;
     color: white;
     background-color: blue;
-    width: 8%;
+    padding: 3px;
+    width: auto;
     border-radius: 5px;
     border: 3px;
     border-style:outset;
@@ -30,7 +42,7 @@ body {
 .quizNumOfQuestions{
     text-align: center;
     font-size: 20px;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 
@@ -99,7 +111,8 @@ body {
 .answerClick{
     cursor: pointer;
     margin-top: 40px;
-    background-color: aqua;
+    color: #fbffb3;
+    background-color: rgb(79, 149, 149);
     height: 50px;
     width: 100px;
     font-weight: bold;
@@ -130,6 +143,17 @@ body {
 .result{
     font-size: 26px;
 }
+
+.darkTheme{
+    background-color: #430047;
+    color: #FFD600;
+}
+
+.btnDarkTheme{
+    background-color: #15497E;
+    color: #FFD600;
+}
+
 
 @media screen and (max-width:1000px) {
     .answerClick{

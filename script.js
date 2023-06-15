@@ -112,6 +112,7 @@ let numOfSelectedAnswers = 0;
 
 const quiz = document.getElementById('quiz');
 const timer = document.getElementById('timer');
+const themeSwitchButton = document.getElementById('themeSwitchButton');
 const numOfQuestion = document.getElementById('numOfQuestion');
 const questions = document.getElementById('questions');
 const results = document.getElementById('results');
@@ -135,7 +136,7 @@ const renderQuestions = (index) => {
     questions.dataset.currentStep = index;
 
     const renderAnswers = () => DATA[index].answers
-    .map(({id,correct,value}) =>`<button class='answerClick' id = ${correct? "correctAnswer":"wrongAnswer"} name="${index} value=${id}">${value}</button>`)
+    .map(({id,correct,value}) =>`<button class="answerClick" id = ${correct ? "correctAnswer":"wrongAnswer"} name="${index} value=${id}">${value}</button>`)
     .join('');
 
     questions.innerHTML = `
@@ -196,26 +197,46 @@ quiz.addEventListener('click',(event) =>{
     }
 
     if(event.target.classList.contains('controlButton-restart')){
-        timer.classList.remove('Visible');
+        timer.classList.remove('nonVisible');
+        themeSwitchButton.classList.remove('nonVisible');
         numOfQuestion.classList.remove('nonVisible');
         questions.classList.remove('nonVisible');
         controlButtonNext.classList.remove('nonVisible');
         controlButtonRestart.classList.remove('visible');
         results.classList.remove('visible');
         count = 0;
+        sumTime = 0;
         renderQuestions(0);
+    }
+    if(event.target.classList.contains('themeSwitchButton')){
+        if(quiz.classList.contains('darkTheme')){
+            document.body.style.background = 'rgb(135, 220, 220)';
+            quiz.classList.remove('darkTheme');
+            themeSwitchButton.classList.remove('btnDarkTheme');
+            timer.classList.remove('btnDarkTheme');
+            controlButtonNext.classList.remove('btnDarkTheme');
+            controlButtonRestart.classList.remove('btnDarkTheme');
+        }else{
+        document.body.style.background = '#293659';
+        quiz.classList.add('darkTheme');
+        themeSwitchButton.classList.add('btnDarkTheme');
+        timer.classList.add('btnDarkTheme');
+        controlButtonNext.classList.add('btnDarkTheme');
+        controlButtonRestart.classList.add('btnDarkTheme');
+        }
     }
 });
 
 const renderResults = (count) => {
     timer.classList.add('nonVisible');
+    themeSwitchButton.classList.add('nonVisible');
     numOfQuestion.classList.add('nonVisible');
     questions.classList.add('nonVisible');
     controlButtonNext.classList.add('nonVisible');
     controlButtonRestart.classList.add('visible');
     results.classList.add('visible');
 
-    results.innerHTML = `<p class="result">Вы решили ${count} из ${DATA.length} вопросов за ${sumTime-DATA.length} секунд.</p>`
+    results.innerHTML = `<p class="result">Вы решили ${count} из ${DATA.length} вопросов за ${sumTime = sumTime > 40 ? sumTime-DATA.length : sumTime} секунд.</p>`
 };
 
 renderQuestions(0);
