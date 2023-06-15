@@ -15,6 +15,18 @@ body {
     padding: 10px 20px 20px 20px;
 }
 
+.timer{
+    text-align: center;
+    color: white;
+    background-color: blue;
+    width: 8%;
+    border-radius: 5px;
+    border: 3px;
+    border-style:outset;
+    border-color: black;
+    float: right;
+}
+
 .quizNumOfQuestions{
     text-align: center;
     font-size: 20px;

@@ -104,18 +104,30 @@ const DATA = [
     },
 ];
 
-
-
+let sumTime = 0;
+let time = 10;
 let count = 0;
 let nOfTrueAnswers = 0;
 let numOfSelectedAnswers = 0;
 
 const quiz = document.getElementById('quiz');
+const timer = document.getElementById('timer');
 const numOfQuestion = document.getElementById('numOfQuestion');
 const questions = document.getElementById('questions');
 const results = document.getElementById('results');
 const controlButtonNext = document.getElementById('controlButton-next');
 const controlButtonRestart = document.getElementById('controlButton-restart');
+
+
+const updateTimer = () => {
+    time = time < 10 ? "0" + time : time;
+    timer.innerHTML = `${time}`;
+    time--;
+    if(time < 0){
+        controlButtonNext.disabled = false;
+        controlButtonNext.click();
+    }
+};
 
 const renderQuestions = (index) => {
     renderNumOfQuestion(index+1);
@@ -167,12 +179,15 @@ quiz.addEventListener('click',(event) =>{
     }
 
     if(event.target.classList.contains('controlButton-next')){
-        let nextQuestion = Number(questions.dataset.currentStep)+1;
+    let nextQuestion = Number(questions.dataset.currentStep)+1;
         
         if(DATA.length === nextQuestion){
+            sumTime += (10 - time);
             renderResults(count);
             questions.classList.remove('disabled');
         } else {
+            sumTime += (10 - time);
+            time = 10;
             renderQuestions(nextQuestion);
             questions.classList.remove('disabled');
         }
@@ -181,6 +196,7 @@ quiz.addEventListener('click',(event) =>{
     }
 
     if(event.target.classList.contains('controlButton-restart')){
+        timer.classList.remove('Visible');
         numOfQuestion.classList.remove('nonVisible');
         questions.classList.remove('nonVisible');
         controlButtonNext.classList.remove('nonVisible');
@@ -192,12 +208,16 @@ quiz.addEventListener('click',(event) =>{
 });
 
 const renderResults = (count) => {
+    timer.classList.add('nonVisible');
     numOfQuestion.classList.add('nonVisible');
     questions.classList.add('nonVisible');
     controlButtonNext.classList.add('nonVisible');
     controlButtonRestart.classList.add('visible');
     results.classList.add('visible');
-    results.innerHTML = `<p class="result">Вы решили ${count} из ${DATA.length} вопросов.</p>`
+
+    results.innerHTML = `<p class="result">Вы решили ${count} из ${DATA.length} вопросов за ${sumTime-DATA.length} секунд.</p>`
 };
 
 renderQuestions(0);
+
+setInterval(updateTimer,1000);
