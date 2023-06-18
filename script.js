@@ -102,6 +102,60 @@ const DATA = [
             },
         ]
     },
+    {
+        question:'How many chromosomes are in the human genome?',
+        numOfTrueAnswers: 1,
+        answers:[
+            {
+                id:'13',
+                value: '42',
+                correct: false,
+                
+            },
+            {
+                id:'14',
+                value: '47',
+                correct: false,
+                
+            },
+            {
+                id:'15',
+                value: '46',
+                correct: true,
+                
+            },
+        ]
+    },
+    {
+        question:'Which of these characters are friends with Harry Potter?',
+        numOfTrueAnswers: 2,
+        answers:[
+            {
+                id:'16',
+                value: 'Ron Weasley',
+                correct: true,
+                
+            },
+            {
+                id:'17',
+                value: 'Draco Malfoy',
+                correct: false,
+                
+            },
+            {
+                id:'18',
+                value: 'Hermione Granger',
+                correct: true,
+                
+            },
+            {
+                id:'19',
+                value: 'Severus Snape',
+                correct: false,
+                
+            },
+        ]
+    },
 ];
 
 let sumTime;
@@ -135,7 +189,7 @@ const updateTimer = () => {
         LS.setItem('time',JSON.stringify(time));
     }
 
-    if(time < 0 && JSON.parse(LS.getItem('CurrentState')) != (DATA.length + 1)){
+    if(time < 1 && JSON.parse(LS.getItem('CurrentState')) != (DATA.length + 1)){
         if(DATA.length === nextQuestion){
             sumTime += (10 - time);
             LS.setItem('SumTime', JSON.stringify(sumTime));
@@ -205,10 +259,9 @@ quiz.addEventListener('click',(event) =>{
         
         if(checkCorrect/numberOfTrueAnswers === 1){
             count++;
+            LS.setItem('Count',JSON.stringify(count));
             checkCorrect = 0;
         }
-
-        LS.setItem('Count',JSON.stringify(count));
 
         if(DATA.length === nextQuestion){
             sumTime += (10 - time);
@@ -289,7 +342,25 @@ const renderResults = (count) => {
     let finishTime = JSON.parse(LS.getItem('SumTime'));
     count = JSON.parse(LS.getItem('Count'));
 
-    results.innerHTML = `<p class="result">Вы решили ${count} из ${DATA.length} вопросов за ${finishTime = finishTime > 40 ? finishTime-DATA.length : finishTime} секунд.</p>`
+    let seconds = finishTime % 60;
+    let minutes = Math.floor(finishTime / 60);
+
+    seconds = (seconds%10 === 1 && (seconds > 20 || seconds < 10)) ? seconds + " секунду" : 
+    (seconds%10 > 1 && seconds%10 < 5) ? seconds + " секунды" : 
+    seconds + " секунд";
+
+    seconds = finishTime >= 60 ? " и " + seconds : seconds;
+    seconds = (minutes > 0 && finishTime % 60 === 0) ? " " : seconds;
+    
+    minutes = (minutes%10 === 1 && (minutes > 20 || minutes < 10)) ? minutes + " минуту" :
+    (minutes%10 > 1 && minutes%10 < 5) ? minutes + " минуты" :
+    minutes + " минут";
+
+    if(finishTime >= 60){
+        results.innerHTML = `<p class="result">Вы решили ${count} из ${DATA.length} вопросов за ${minutes}${seconds}.</p>`
+    }else {
+        results.innerHTML = `<p class="result">Вы решили ${count} из ${DATA.length} вопросов за ${seconds}.</p>`
+    }
 
     LS.setItem('CurrentState',JSON.stringify(DATA.length+1));
 };
