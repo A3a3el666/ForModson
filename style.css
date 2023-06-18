@@ -231,8 +231,21 @@ body{
         .result{
             font-size: 20px;
         }
+
+        .timer{
+            padding: 0;
+            font-size: 12px;
+            width: 15%;
+        }
+        .themeSwitchButton{
+            font-size: 12px;
+            width: 50%;
+        }
     }
         @media screen and (max-width:375px) {
+            .quizQuestions-item-question{
+                font-weight: bold;
+            }
             .controlButton-next{
                 width: 80px;
             }
@@ -248,5 +261,14 @@ body{
             .controlButton-restart{
                 margin: 0;
                 width: 70%;
+            }
+            .timer{
+                padding: 0;
+                font-size: 10px;
+                width: 15%;
+            }
+            .themeSwitchButton{
+                font-size: 10px;
+                width: 50%;
             }
         }
