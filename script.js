@@ -1,162 +1,4 @@
 "use strict";
-const DATA = [
-    {
-        question:'How many planets are in the solar system?',
-        numOfTrueAnswers: 1,
-        answers:[
-            {
-                id:'0',
-                value: '8',
-                correct: true,
-                
-            },
-            {
-                id:'1',
-                value: '9',
-                correct: false,
-                
-            },
-            {
-                id:'2',
-                value: '10',
-                correct: false,
-                
-            },
-        ]
-    },
-    {
-        question:'What is the freezing point of water?',
-        numOfTrueAnswers: 1,
-        answers:[
-            {
-                id:'3',
-                value: '-2',
-                correct: false,
-                
-            },
-            {
-                id:'4',
-                value: '0',
-                correct: true,
-                
-            },
-            {
-                id:'5',
-                value: '4',
-                correct: false,
-                
-            },
-        ]
-    },
-    {
-        question:'What is the capital of Canada?',
-        numOfTrueAnswers: 1,
-        answers:[
-            {
-                id:'6',
-                value: 'Tokio',
-                correct: false,
-                
-            },
-            {
-                id:'7',
-                value: 'Minsk',
-                correct: false,
-                
-            },
-            {
-                id:'8',
-                value: 'Ottawa',
-                correct: true,
-                
-            },
-        ]
-    },
-    {
-        question:'What is the longest rivers in the world?',
-        numOfTrueAnswers: 2,
-        answers:[
-            {
-                id:'9',
-                value: 'Nile',
-                correct: true,
-                
-            },
-            {
-                id:'10',
-                value: 'Amazon',
-                correct: true,
-                
-            },
-            {
-                id:'11',
-                value: 'Volga',
-                correct: false,
-                
-            },
-            {
-                id:'12',
-                value: 'Dunai',
-                correct: false,
-                
-            },
-        ]
-    },
-    {
-        question:'How many chromosomes are in the human genome?',
-        numOfTrueAnswers: 1,
-        answers:[
-            {
-                id:'13',
-                value: '42',
-                correct: false,
-                
-            },
-            {
-                id:'14',
-                value: '47',
-                correct: false,
-                
-            },
-            {
-                id:'15',
-                value: '46',
-                correct: true,
-                
-            },
-        ]
-    },
-    {
-        question:'Which of these characters are friends with Harry Potter?',
-        numOfTrueAnswers: 2,
-        answers:[
-            {
-                id:'16',
-                value: 'Ron Weasley',
-                correct: true,
-                
-            },
-            {
-                id:'17',
-                value: 'Draco Malfoy',
-                correct: false,
-                
-            },
-            {
-                id:'18',
-                value: 'Hermione Granger',
-                correct: true,
-                
-            },
-            {
-                id:'19',
-                value: 'Severus Snape',
-                correct: false,
-                
-            },
-        ]
-    },
-];
 
 let sumTime;
 let time;
@@ -165,13 +7,17 @@ let numberOfTrueAnswers = 0;
 let numOfSelectedAnswers = 0;
 let checkCorrect = 0;
 let nextQuestion;
-let theme;
+let progressWidth = 0;
 
 const LS = localStorage;
 
 const quiz = document.getElementById('quiz');
+const footer = document.getElementById('footer');
+const quizControls = document.getElementById('quizControls');
+const topMenu = document.getElementById('topMenu');
 const timer = document.getElementById('timer');
-const themeSwitchButton = document.getElementById('themeSwitchButton');
+const toggleBox = document.getElementById('toggle');
+const toggle = document.getElementById('toggle-input');
 const numOfQuestion = document.getElementById('numOfQuestion');
 const questions = document.getElementById('questions');
 const results = document.getElementById('results');
@@ -194,12 +40,14 @@ const updateTimer = () => {
             sumTime += (10 - time);
             LS.setItem('SumTime', JSON.stringify(sumTime));
             renderResults(count);
+            progress();
             questions.classList.remove('disabled');
         } else {
             sumTime += (10 - time);
             LS.setItem('SumTime', JSON.stringify(sumTime));
             time = 10;
             renderQuestions(nextQuestion);
+            progress();
             questions.classList.remove('disabled');
         }
     }
@@ -254,9 +102,10 @@ quiz.addEventListener('click',(event) =>{
             }
         }
     }
+});
 
+quizControls.addEventListener('click',(event) =>{
     if(event.target.classList.contains('controlButton-next')){
-        
         if(checkCorrect/numberOfTrueAnswers === 1){
             count++;
             LS.setItem('Count',JSON.stringify(count));
@@ -267,12 +116,14 @@ quiz.addEventListener('click',(event) =>{
             sumTime += (10 - time);
             LS.setItem('SumTime', JSON.stringify(sumTime));
             renderResults(count);
+            progress(); 
             questions.classList.remove('disabled');
         } else {
             sumTime += (10 - time);
             LS.setItem('SumTime', JSON.stringify(sumTime));
             time = 10;
             renderQuestions(nextQuestion);
+            progress(); 
             questions.classList.remove('disabled');
         }
 
@@ -280,8 +131,8 @@ quiz.addEventListener('click',(event) =>{
     }
 
     if(event.target.classList.contains('controlButton-restart')){
+        toggleBox.classList.remove('nonVisible');
         timer.classList.remove('nonVisible');
-        themeSwitchButton.classList.remove('nonVisible');
         numOfQuestion.classList.remove('nonVisible');
         questions.classList.remove('nonVisible');
         controlButtonNext.classList.remove('nonVisible');
@@ -292,37 +143,42 @@ quiz.addEventListener('click',(event) =>{
         time = 10;
         sumTime = 0;
         renderQuestions(0);
-    }
-    if(event.target.classList.contains('themeSwitchButton')){
-        if(theme === 1){
-            document.body.style.background = 'rgb(135, 220, 220)';
-            quiz.classList.remove('darkTheme');
-            themeSwitchButton.classList.remove('btnDarkTheme');
-            timer.classList.remove('btnDarkTheme');
-            controlButtonNext.classList.remove('btnDarkTheme');
-            controlButtonRestart.classList.remove('btnDarkTheme');
-
-            theme = 0;
-            LS.setItem('CurrentTheme',JSON.stringify(theme));
-        }else{
-            document.body.style.background = '#293659';
-            quiz.classList.add('darkTheme');
-            themeSwitchButton.classList.add('btnDarkTheme');
-            timer.classList.add('btnDarkTheme');
-            controlButtonNext.classList.add('btnDarkTheme');
-            controlButtonRestart.classList.add('btnDarkTheme');
-
-            theme = 1;
-            LS.setItem('CurrentTheme',JSON.stringify(theme));
-        }
+        progress();
     }
 });
 
+topMenu.addEventListener('change', (event) => {
+
+    if(event.target.classList.contains('toggle-input')){
+        if(event.target.checked){
+            document.body.style.backgroundImage = 'url(assets/quizBGdark.jpg)';
+            footer.classList.add('darkTheme');
+            quiz.classList.add('darkTheme');
+            timer.classList.add('btnDarkTheme');
+            controlButtonNext.classList.add('btnDarkTheme');
+            controlButtonRestart.classList.add('btnDarkTheme');
+        }else{
+            document.body.style.backgroundImage = 'url(assets/quizBGdefault.jpg)';
+            footer.classList.remove('darkTheme');
+            quiz.classList.remove('darkTheme');
+            timer.classList.remove('btnDarkTheme');
+            controlButtonNext.classList.remove('btnDarkTheme');
+            controlButtonRestart.classList.remove('btnDarkTheme');
+        }
+    }
+
+});
+
+const toggleTheme = () => {
+    const isChecked = toggle.checked;
+    localStorage.setItem('theme',isChecked ? 'dark-theme' : '');
+  };
+
 const themeSave = (theme) => {
-    if(theme === 1){
-        document.body.style.background = '#293659';
+    if(theme === 'dark-theme'){
+        document.body.style.backgroundImage = 'url(assets/quizBGdark.jpg)';
+        footer.classList.add('darkTheme');
         quiz.classList.add('darkTheme');
-        themeSwitchButton.classList.add('btnDarkTheme');
         timer.classList.add('btnDarkTheme');
         controlButtonNext.classList.add('btnDarkTheme');
         controlButtonRestart.classList.add('btnDarkTheme');
@@ -330,9 +186,8 @@ const themeSave = (theme) => {
 };
 
 const renderResults = (count) => {
-
+    toggleBox.classList.add('nonVisible');
     timer.classList.add('nonVisible');
-    themeSwitchButton.classList.add('nonVisible');
     numOfQuestion.classList.add('nonVisible');
     questions.classList.add('nonVisible');
     controlButtonNext.classList.add('nonVisible');
@@ -345,25 +200,22 @@ const renderResults = (count) => {
     let seconds = finishTime % 60;
     let minutes = Math.floor(finishTime / 60);
 
-    seconds = (seconds%10 === 1 && (seconds > 20 || seconds < 10)) ? seconds + " секунду" : 
-    (seconds%10 > 1 && seconds%10 < 5) ? seconds + " секунды" : 
-    seconds + " секунд";
-
-    seconds = finishTime >= 60 ? " и " + seconds : seconds;
-    seconds = (minutes > 0 && finishTime % 60 === 0) ? " " : seconds;
-    
-    minutes = (minutes%10 === 1 && (minutes > 20 || minutes < 10)) ? minutes + " минуту" :
-    (minutes%10 > 1 && minutes%10 < 5) ? minutes + " минуты" :
-    minutes + " минут";
-
     if(finishTime >= 60){
-        results.innerHTML = `<p class="result">Вы решили ${count} из ${DATA.length} вопросов за ${minutes}${seconds}.</p>`
+        results.innerHTML = `<p class="result">Вы решили ${count} из ${DATA.length} вопросов за ${minutes} минуту и ${seconds} секунд.</p>`
     }else {
-        results.innerHTML = `<p class="result">Вы решили ${count} из ${DATA.length} вопросов за ${seconds}.</p>`
+        results.innerHTML = `<p class="result">Вы решили ${count} из ${DATA.length} вопросов за ${seconds} секунд.</p>`
     }
 
     LS.setItem('CurrentState',JSON.stringify(DATA.length+1));
 };
+
+ function progress () {
+    let line = document.getElementById('progress-line');
+    let currentProgress = JSON.parse(LS.getItem('CurrentState'));
+    progressWidth = currentProgress > DATA.length ? 100 : 
+    Math.round((currentProgress / DATA.length) * 100);
+    line.style.width = progressWidth + '%';
+}
 
 if(JSON.parse(LS.getItem('CurrentState')) === null){
     renderQuestions(0);
@@ -373,11 +225,22 @@ if(JSON.parse(LS.getItem('CurrentState')) === null){
     renderQuestions(JSON.parse(LS.getItem('CurrentState')));
 }
 
+
+
 JSON.parse(LS.getItem('time')) === null ? time = 10 : time = JSON.parse(LS.getItem('time'));
 JSON.parse(LS.getItem('CurrentState')) === null || JSON.parse(LS.getItem('CurrentState')) === 0 ? sumTime = 0 : sumTime = JSON.parse(LS.getItem('SumTime'));
 JSON.parse(LS.getItem('Count')) === null || JSON.parse(LS.getItem('CurrentState')) === 0 ? count = 0 : count = JSON.parse(LS.getItem('Count'));
-JSON.parse(LS.getItem('CurrentTheme') === null) ? theme = 0 : theme = JSON.parse(LS.getItem('CurrentTheme'));
-themeSave(theme);
-
+themeSave(LS.getItem('theme'));
+toggle.checked = LS.getItem('theme');
+toggle.addEventListener('input', toggleTheme); 
+toggleTheme();
+progress();
 
 setInterval(updateTimer,1000);
+
+
+
+
+
+  
+  

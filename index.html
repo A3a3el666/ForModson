@@ -8,25 +8,32 @@
     <title>Task1</title>
 </head>
 <body>
+    <div class="wrap" id="topMenu">
+        <label class="toggle" id="toggle">
+            <input type="checkbox" class="toggle-input" id="toggle-input">
+            <span class="toggle-slider"></span>
+        </label>
+        <div class="timer" id="timer">...</div>
+    </div>
     <div class="quiz" id="quiz">
-        <div class="themeSwitch">
-            <button class="themeSwitchButton" id="themeSwitchButton">
-                Смена темы
-            </button>
-        </div>
-        <div class="timer" id="timer">00</div>
         <div class="quizNumOfQuestions" id="numOfQuestion"></div>
         <div class="quizQuestions" id="questions"> </div>
         <div class="quizResults" id="results"></div>
-        <div class="quizControls">
+    </div>
+    <footer class="footer" id="footer">
+        <div class="progress">
+                <div class="progress-line" id="progress-line"></div>
+        </div>
+        <div class="quizControls" id="quizControls">
             <button class="controlButton-next" id="controlButton-next" disabled>
-                Далее
+                Next
             </button>
             <button class="controlButton-restart" id="controlButton-restart">
-                Сначала
+                Restart
             </button>
         </div>
-    </div>
+    </footer>
+    <script src="constants.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
